@@ -9,7 +9,7 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem('token')
     setAutenticado(!!token)
-  }, [location]) // se actualiza cada que cambia de ruta
+  }, [location])
 
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -17,12 +17,51 @@ export default function Header() {
     navigate('/login')
   }
 
+  // Función para navegar dentro de la landing hacia secciones con smooth scroll
+  const scrollToSection = (id: string) => {
+    if (location.pathname !== '/') {
+      navigate('/', { replace: false })
+      // Esperamos que la ruta cambie antes de hacer scroll
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        el?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      const el = document.getElementById(id)
+      el?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
-    <header className="bg-purple-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
-      <div className="flex gap-4 items-center">
-        <Link to="/" className="text-lg font-bold tracking-wide hover:underline">
+    <header className="bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500 text-white px-8 py-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
+      <div className="flex gap-8 items-center font-semibold tracking-wide">
+        <Link to="/" className="text-xl font-extrabold hover:text-purple-300 transition">
           CRM Leads 💎
         </Link>
+
+        <button
+          onClick={() => scrollToSection('hero')}
+          className="hover:text-purple-300 transition text-sm"
+          aria-label="Ir a inicio"
+        >
+          Inicio
+        </button>
+
+        <button
+          onClick={() => scrollToSection('sobre-nosotros')}
+          className="hover:text-purple-300 transition text-sm"
+          aria-label="Ir a sobre nosotros"
+        >
+          Sobre Nosotros
+        </button>
+
+        <button
+          onClick={() => scrollToSection('contacto')}
+          className="hover:text-purple-300 transition text-sm"
+          aria-label="Ir a contacto"
+        >
+          Contacto
+        </button>
 
         {autenticado && (
           <Link
@@ -34,21 +73,23 @@ export default function Header() {
         )}
       </div>
 
-      {autenticado ? (
-        <button
-          onClick={handleLogout}
-          className="bg-white text-purple-700 px-4 py-2 rounded hover:bg-purple-100 transition"
-        >
-          Cerrar sesión
-        </button>
-      ) : (
-        <Link
-          to="/login"
-          className="bg-white text-purple-700 px-4 py-2 rounded hover:bg-purple-100 transition"
-        >
-          Iniciar sesión
-        </Link>
-      )}
+      <div>
+        {autenticado ? (
+          <button
+            onClick={handleLogout}
+            className="bg-white text-purple-700 px-5 py-2 rounded-full font-semibold hover:bg-purple-100 transition shadow-md"
+          >
+            Cerrar sesión
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-white text-purple-700 px-5 py-2 rounded-full font-semibold hover:bg-purple-100 transition shadow-md"
+          >
+            Iniciar sesión
+          </Link>
+        )}
+      </div>
     </header>
   )
 }
