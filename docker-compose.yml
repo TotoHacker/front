@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "4173:4173"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
