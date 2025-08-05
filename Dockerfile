@@ -9,16 +9,15 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:20-alpine
+# Etapa de producción con nginx
+FROM nginx:alpine
 
-WORKDIR /app
+# Copiamos el build a la ruta pública de nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./
-RUN npm install --omit=dev
+# Copiamos configuración personalizada de nginx
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-RUN npm install -g vite
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
-EXPOSE 4173
-
-CMD ["vite", "preview", "--host", "--port", "4173"]

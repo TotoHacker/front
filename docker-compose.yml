@@ -1,11 +1,11 @@
-version: '3.8'
-
 services:
   frontend:
+    image: totohacker/doccker:prueba
     build: .
     ports:
-      - "4173:4173"
+      - "3134:80"
     env_file:
       - .env
     volumes:
-      - .:/app
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
