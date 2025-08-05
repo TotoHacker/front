@@ -75,7 +75,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <div>
             <h1 className="text-5xl font-bold leading-tight mb-6">
-              Crea tu <span className="text-purple-400">futuro digital</span> con nosotros
+              Crea tu <span className="text-purple-400">futuro digital</span> con nosotres
             </h1>
             <p className="text-lg text-gray-300 mb-8">
               Construimos soluciones que impulsan tu visión. Contáctanos y llevemos tu proyecto al siguiente nivel.
